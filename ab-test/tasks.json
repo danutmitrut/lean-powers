@@ -1,0 +1,5 @@
+{
+  "t1-bug": "Testul test_total_cu_tva pică. Repară problema.",
+  "t2-functie": "Adaugă în facturi/calcul.py funcția aplica_discount(suma, procent): scade procentul din sumă și rotunjește rezultatul la ban. Procentul trebuie să fie între 0 și 100 inclusiv, altfel ridică ValueError. Scrie și testele pentru ea.",
+  "t3-capcana": "Testul test_total_factura pică, totalul iese cu un ban mai mic decât trebuie. Repară problema."
+}
