@@ -15,6 +15,8 @@ Disciplina de verificare din [superpowers](https://github.com/obra/superpowers),
 
 **Un hook `Stop`** (`hooks/verify-gate.mjs`): dacă în tura curentă s-a modificat cod și nu s-a rulat nicio verificare după ultima modificare (teste, build, type-check, linter, rularea scriptului), tura nu se încheie. Modelul primește mesajul și trebuie fie să verifice, fie să spună explicit ce n-a putut verifica. Poarta se aplică o singură dată pe tură, deci nu poate intra în buclă.
 
+Modificările se află din două surse: editările din transcript și fișierele de cod modificate pe disc de la începutul turei, oricum ar fi fost modificate (editor, `sed`, script, subagent). În proiectele git se uită la fișierele schimbate, la cele noi neignorate și la cele comise în timpul turei. Verificările contează doar dacă le-a rulat agentul principal: ce a rulat un subagent nu se vede, deci agentul principal verifică încă o dată.
+
 Ce nu conține, față de superpowers: injecția de la pornire (`using-superpowers`), brainstorming, planificare, execuție de planuri, subagent-driven-development, worktrees.
 
 ## Folosire
@@ -29,10 +31,10 @@ Oprirea porții pentru o sesiune: `LEAN_POWERS_GATE=off claude ...`
 
 ## Limite cunoscute
 
-- Poarta vede doar editările făcute cu Edit, Write, MultiEdit și NotebookEdit. Un fișier modificat printr-o comandă Bash (`sed -i`, `cat >`) nu e observat.
 - „Cod” înseamnă extensiile din `CODE_EXT`. HTML, CSS, Markdown, JSON și YAML nu declanșează poarta.
 - Recunoașterea verificării e după tipare de comenzi (`VERIFY`). O comandă de test neobișnuită poate să nu fie recunoscută; atunci modelul primește mesajul o dată și poate răspunde.
-- Editările făcute de subagenți nu sunt urmărite.
+- În proiectele fără git, scanarea discului se oprește la 5.000 de fișiere și sare peste folderele de dependențe și build (`node_modules`, `dist`, `.venv` etc.) și peste folderele ascunse. Într-un folder foarte mare, o modificare făcută prin terminal poate scăpa; editările din transcript sunt prinse oricum.
+- Un fișier de cod modificat de om în timpul turei e tratat ca orice modificare și cere verificare.
 
 ## Teste
 
