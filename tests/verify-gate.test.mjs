@@ -150,6 +150,16 @@ test('git: prinde codul comis în timpul turei fără verificare', () => {
   assert.match(out.reason, /app\.py/);
 });
 
+test('git: modificare, verificare, apoi commit nu blochează', () => {
+  const { dir, gitNow } = gitRepo();
+  writeFileSync(join(dir, 'app.py'), 'x = 4\n');
+  // modificat după începutul turei (acum - 60 s), înainte ca verificarea să se termine (acum - 58 s)
+  const t = new Date(Date.now() - 59_300);
+  utimesSync(join(dir, 'app.py'), t, t);
+  gitNow('commit', '-qam', 'după test'); // commit-ul are ora de acum, după verificare
+  assert.equal(run([userText('repară și fă commit'), bash('pytest -q')], { cwd: dir }), null);
+});
+
 test('git: ignoră fișierele modificate înainte de începutul turei', () => {
   const { dir } = gitRepo();
   writeFileSync(join(dir, 'app.py'), 'x = 2\n');

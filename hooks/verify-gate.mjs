@@ -72,12 +72,16 @@ function diskChanges(cwd, since) {
     // schimbate și necomise, plus cele noi neignorate
     const pending = git('ls-files', '-z', '--modified', '--others', '--exclude-standard', '--full-name', ':/').split('\0').filter(Boolean);
     for (const rel of pending) { const abs = join(root, rel); note(abs, mtime(abs)); }
-    // comise în timpul turei: ora commit-ului, nu a fișierului
+    // comise în timpul turei: ora fișierului, ca un commit făcut după verificare să nu conteze
+    // drept modificare; ora commit-ului doar pentru fișierele care nu mai există pe disc
     const log = git('log', `--since=${Math.floor(since / 1000)}`, '--format=@%ct', '--name-only');
     let commitTime = 0;
     for (const line of log.split('\n')) {
-      if (line.startsWith('@')) commitTime = Number(line.slice(1)) * 1000;
-      else if (line.trim()) note(join(root, line.trim()), Math.max(commitTime, since + 1));
+      if (line.startsWith('@')) { commitTime = Number(line.slice(1)) * 1000; continue; }
+      if (!line.trim()) continue;
+      const abs = join(root, line.trim());
+      const t = mtime(abs);
+      note(abs, t >= 0 ? t : Math.max(commitTime, since + 1));
     }
     return changed;
   }
