@@ -1,0 +1,10 @@
+{
+  "name": "lean-powers",
+  "description": "Disciplina de verificare din superpowers, fără procesul impus: modelul lucrează liber, dar nu declară gata fără dovadă.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Dănuț Mitruț"
+  },
+  "license": "MIT",
+  "keywords": ["verification", "debugging", "tdd", "code-review", "hooks"]
+}
