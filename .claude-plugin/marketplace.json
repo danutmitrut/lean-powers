@@ -1,0 +1,13 @@
+{
+  "name": "lean-powers",
+  "owner": {
+    "name": "Dănuț Mitruț"
+  },
+  "plugins": [
+    {
+      "name": "lean-powers",
+      "source": "./",
+      "description": "Disciplina de verificare din superpowers, fără procesul impus."
+    }
+  ]
+}
