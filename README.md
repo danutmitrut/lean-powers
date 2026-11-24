@@ -19,6 +19,32 @@ Modificările se află din două surse: editările din transcript și fișierele
 
 Ce nu conține, față de superpowers: injecția de la pornire (`using-superpowers`), brainstorming, planificare, execuție de planuri, subagent-driven-development, worktrees.
 
+## Instalare
+
+Ai nevoie de Claude Code și de Node.js (poarta de verificare e un script Node). Verifici Node cu `node --version`; dacă lipsește, îl instalezi de pe [nodejs.org](https://nodejs.org) (varianta LTS).
+
+În Claude Code rulezi, pe rând:
+
+```
+/plugin marketplace add danutmitrut/lean-powers
+```
+
+```
+/plugin install lean-powers@lean-powers
+```
+
+Apoi repornești Claude Code. Skill-urile apar ca `lean-powers:verification`, `lean-powers:debugging`, `lean-powers:tdd` și `lean-powers:review-feedback`.
+
+Actualizare, când apare o versiune nouă:
+
+```
+/plugin marketplace update lean-powers
+```
+
+Dacă folosești și superpowers, dezactivează-l, ca să nu lucreze amândouă în aceeași sesiune.
+
+Testat pe Opus 5.5. Pe Sonnet și Haiku n-a fost încă măsurat.
+
 ## Folosire
 
 Pentru o singură sesiune, fără instalare:
